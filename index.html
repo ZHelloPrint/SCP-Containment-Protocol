@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SCP: Containment</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <!-- Three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+</head>
+
+<body>
+
+    <!-- =====================================================
+         THREE.JS GAME
+         ===================================================== -->
+
+    <div id="game-container"></div>
+
+
+    <!-- =====================================================
+         VISUAL EFFECTS
+         ===================================================== -->
+
+    <div class="facility-overlay"></div>
+    <div class="vignette"></div>
+
+
+    <!-- =====================================================
+         MAIN MENU
+         ===================================================== -->
+
+    <section
+        id="main-menu"
+        class="screen"
+    >
+
+        <div class="menu-panel">
+
+            <div class="menu-header">
+
+                <div class="scp-symbol"></div>
+
+                <div class="menu-classification">
+                    SCP FOUNDATION // SITE-██
+                </div>
+
+                <h1 class="menu-title">
+                    CONTAINMENT
+                </h1>
+
+                <p class="menu-subtitle">
+                    Secure. Contain. Protect.
+                    <br>
+                    Facility operations terminal.
+                </p>
+
+            </div>
+
+
+            <div class="menu-buttons">
+
+                <button
+                    class="menu-button"
+                    data-mode="STORY"
+                >
+                    <span>STORY</span>
+                </button>
+
+                <button
+                    class="menu-button"
+                    data-mode="CONTAINMENT"
+                >
+                    <span>CONTAINMENT BREACH</span>
+                </button>
+
+                <button
+                    class="menu-button"
+                    data-mode="LOCKDOWN"
+                >
+                    <span>FACILITY LOCKDOWN</span>
+                </button>
+
+                <button
+                    class="menu-button"
+                    data-mode="FREEPLAY"
+                >
+                    <span>FREEPLAY</span>
+                </button>
+
+                <button
+                    class="menu-button"
+                    data-action="controls"
+                >
+                    <span>CONTROLS</span>
+                </button>
+
+                <button
+                    class="menu-button"
+                    data-action="settings"
+                >
+                    <span>SETTINGS</span>
+                </button>
+
+                <button
+                    class="menu-button"
+                    data-action="load"
+                >
+                    <span>LOAD SAVE</span>
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ROLE SELECT
+         ===================================================== -->
+
+    <section
+        id="role-menu"
+        class="screen"
+        style="display:none;"
+    >
+
+        <div class="menu-panel">
+
+            <div class="menu-header">
+
+                <div class="menu-classification">
+                    PERSONNEL ASSIGNMENT
+                </div>
+
+                <h1 class="menu-title">
+                    SELECT ROLE
+                </h1>
+
+                <p class="menu-subtitle">
+                    Choose your role inside the facility.
+                    Each role has different objectives,
+                    abilities, and survival conditions.
+                </p>
+
+            </div>
+
+
+            <div class="role-grid">
+
+                <!-- GUARD -->
+
+                <button
+                    class="role-card"
+                    data-role="GUARD"
+                >
+
+                    <div class="scp-number">
+                        SECURITY
+                    </div>
+
+                    <div class="role-name">
+                        GUARD
+                    </div>
+
+                    <div class="role-description">
+                        Armed facility security personnel
+                        with access to higher-level areas
+                        and security systems.
+                    </div>
+
+                </button>
+
+
+                <!-- D CLASS -->
+
+                <button
+                    class="role-card"
+                    data-role="D-CLASS"
+                >
+
+                    <div class="scp-number">
+                        TEST SUBJECT
+                    </div>
+
+                    <div class="role-name">
+                        D-CLASS
+                    </div>
+
+                    <div class="role-description">
+                        Disposable personnel attempting
+                        to survive the facility and
+                        locate an escape route.
+                    </div>
+
+                </button>
+
+
+                <!-- SCP -->
+
+                <button
+                    class="role-card"
+                    data-role="SCP"
+                >
+
+                    <div class="scp-number">
+                        ANOMALOUS ENTITY
+                    </div>
+
+                    <div class="role-name">
+                        SCP
+                    </div>
+
+                    <div class="role-description">
+                        Play as a contained anomaly and
+                        attempt to escape containment.
+                    </div>
+
+                </button>
+
+            </div>
+
+
+            <button
+                class="back-button"
+                data-action="back"
+            >
+                BACK
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SCP SELECT
+         ===================================================== -->
+
+    <section
+        id="scp-menu"
+        class="screen"
+        style="display:none;"
+    >
+
+        <div class="menu-panel">
+
+            <div class="menu-header">
+
+                <div class="menu-classification">
+                    ANOMALOUS ENTITY DATABASE
+                </div>
+
+                <h1 class="menu-title">
+                    SELECT SCP
+                </h1>
+
+                <p class="menu-subtitle">
+                    Select the anomaly you will control.
+                </p>
+
+            </div>
+
+
+            <div class="scp-grid">
+
+                <!-- SCP 173 -->
+
+                <button
+                    class="scp-card"
+                    data-scp="173"
+                >
+
+                    <div class="scp-number">
+                        SCP-173
+                    </div>
+
+                    <div class="scp-name">
+                        THE STATUE
+                    </div>
+
+                    <div class="scp-description">
+                        A hostile statue-like anomaly.
+                        It can move rapidly when it is
+                        outside the observer's direct view.
+                    </div>
+
+                </button>
+
+
+                <!-- SCP 096 -->
+
+                <button
+                    class="scp-card"
+                    data-scp="096"
+                >
+
+                    <div class="scp-number">
+                        SCP-096
+                    </div>
+
+                    <div class="scp-name">
+                        THE SHY GUY
+                    </div>
+
+                    <div class="scp-description">
+                        An extremely dangerous humanoid
+                        anomaly that reacts when its face
+                        is observed.
+                    </div>
+
+                </button>
+
+
+                <!-- SCP 049 -->
+
+                <button
+                    class="scp-card"
+                    data-scp="049"
+                >
+
+                    <div class="scp-number">
+                        SCP-049
+                    </div>
+
+                    <div class="scp-name">
+                        THE PLAGUE DOCTOR
+                    </div>
+
+                    <div class="scp-description">
+                        A humanoid anomaly wearing a
+                        plague-doctor-like mask and robe.
+                    </div>
+
+                </button>
+
+            </div>
+
+
+            <button
+                class="back-button"
+                data-action="back"
+            >
+                BACK
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SETTINGS
+         ===================================================== -->
+
+    <section
+        id="settings-menu"
+        class="screen"
+        style="display:none;"
+    >
+
+        <div class="menu-panel">
+
+            <div class="menu-header">
+
+                <div class="menu-classification">
+                    SYSTEM CONFIGURATION
+                </div>
+
+                <h1 class="menu-title">
+                    SETTINGS
+                </h1>
+
+            </div>
+
+
+            <div class="settings-list">
+
+                <div class="setting">
+
+                    <label for="sensitivity">
+                        MOUSE SENSITIVITY
+                    </label>
+
+                    <input
+                        id="sensitivity"
+                        type="range"
+                        min="0.0008"
+                        max="0.006"
+                        step="0.0001"
+                        value="0.0022"
+                    >
+
+                    <div class="setting-value">
+                        MOUSE
+                    </div>
+
+                </div>
+
+
+                <div class="setting">
+
+                    <label for="fov">
+                        FIELD OF VIEW
+                    </label>
+
+                    <input
+                        id="fov"
+                        type="range"
+                        min="60"
+                        max="110"
+                        step="1"
+                        value="75"
+                    >
+
+                    <div class="setting-value">
+                        FOV
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="back-button"
+                data-action="back"
+            >
+                BACK
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CONTROLS
+         ===================================================== -->
+
+    <section
+        id="controls-menu"
+        class="screen"
+        style="display:none;"
+    >
+
+        <div class="menu-panel">
+
+            <div class="menu-header">
+
+                <div class="menu-classification">
+                    PERSONNEL CONTROL SCHEME
+                </div>
+
+                <h1 class="menu-title">
+                    CONTROLS
+                </h1>
+
+            </div>
+
+
+            <div class="controls-grid">
+
+                <div class="control">
+                    <span class="control-name">
+                        MOVE
+                    </span>
+
+                    <span class="key">
+                        WASD
+                    </span>
+                </div>
+
+
+                <div class="control">
+                    <span class="control-name">
+                        LOOK
+                    </span>
+
+                    <span class="key">
+                        MOUSE
+                    </span>
+                </div>
+
+
+                <div class="control">
+                    <span class="control-name">
+                        SPRINT
+                    </span>
+
+                    <span class="key">
+                        SHIFT
+                    </span>
+                </div>
+
+
+                <div class="control">
+                    <span class="control-name">
+                        CROUCH
+                    </span>
+
+                    <span class="key">
+                        CTRL
+                    </span>
+                </div>
+
+
+                <div class="control">
+                    <span class="control-name">
+                        INTERACT
+                    </span>
+
+                    <span class="key">
+                        E
+                    </span>
+                </div>
+
+
+                <div class="control">
+                    <span class="control-name">
+                        FLASHLIGHT
+                    </span>
+
+                    <span class="key">
+                        F
+                    </span>
+                </div>
+
+
+                <div class="control">
+                    <span class="control-name">
+                        MAP
+                    </span>
+
+                    <span class="key">
+                        M
+                    </span>
+                </div>
+
+
+                <div class="control">
+                    <span class="control-name">
+                        PAUSE
+                    </span>
+
+                    <span class="key">
+                        ESC
+                    </span>
+                </div>
+
+            </div>
+
+
+            <button
+                class="back-button"
+                data-action="back"
+            >
+                BACK
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         HUD
+         ===================================================== -->
+
+    <div
+        id="hud"
+        style="display:none;"
+    >
+
+        <!-- TOP LEFT -->
+
+        <div class="hud-top">
+
+            <div class="hud-location">
+                SITE-██ // ACTIVE
+            </div>
+
+            <div
+                id="security-status"
+                class="hud-security"
+            >
+                NORMAL
+            </div>
+
+        </div>
+
+
+        <!-- TOP RIGHT -->
+
+        <div id="facility-status">
+
+            <div class="status-chip">
+
+                SECURITY:
+                <span id="security-status">
+                    NORMAL
+                </span>
+
+            </div>
+
+            <div class="status-chip">
+
+                POWER:
+                <span id="power-value">
+                    100%
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- OBJECTIVES -->
+
+        <div id="objectives"></div>
+
+
+        <!-- CROSSHAIR -->
+
+        <div id="crosshair"></div>
+
+
+        <!-- CENTER MESSAGE -->
+
+        <div id="message"></div>
+
+
+        <!-- BOTTOM LEFT -->
+
+        <div class="hud-bottom-left">
+
+            <div class="stat">
+
+                <div class="stat-row">
+
+                    <span>
+                        HEALTH
+                    </span>
+
+                    <span id="health-value">
+                        100%
+                    </span>
+
+                </div>
+
+                <div class="stat-bar">
+
+                    <div
+                        id="health-bar"
+                        class="stat-fill"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-row">
+
+                    <span>
+                        STAMINA
+                    </span>
+
+                    <span id="stamina-value">
+                        100%
+                    </span>
+
+                </div>
+
+                <div class="stat-bar">
+
+                    <div
+                        id="stamina-bar"
+                        class="stat-fill"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- KEYCARD -->
+
+        <div id="keycard-display">
+
+            <div class="keycard-label">
+                ACCESS AUTHORIZATION
+            </div>
+
+            <div id="keycard-value">
+                LEVEL 3
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAP
+         ===================================================== -->
+
+    <div id="map-panel">
+
+        <div class="map-header">
+
+            <div class="map-title">
+                FACILITY MAP
+            </div>
+
+            <div class="map-floor">
+                FLOOR 1
+            </div>
+
+        </div>
+
+        <div id="map"></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         PAUSE MENU
+         ===================================================== -->
+
+    <div
+        id="pause-menu"
+        style="display:none;"
+    >
+
+        <div class="pause-panel">
+
+            <div class="pause-title">
+                GAME PAUSED
+            </div>
+
+            <div class="pause-subtitle">
+                FACILITY SIMULATION SUSPENDED
+            </div>
+
+
+            <div class="menu-buttons">
+
+                <button
+                    class="menu-button"
+                    data-action="resume"
+                >
+                    <span>
+                        RESUME
+                    </span>
+                </button>
+
+
+                <button
+                    class="menu-button"
+                    data-action="save"
+                >
+                    <span>
+                        SAVE GAME
+                    </span>
+                </button>
+
+
+                <button
+                    class="menu-button danger"
+                    data-action="menu"
+                >
+                    <span>
+                        EXIT TO MENU
+                    </span>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         GAME OVER
+         ===================================================== -->
+
+    <div
+        id="game-over"
+        style="display:none;"
+    >
+
+        <div class="game-over-panel">
+
+            <div class="game-over-title">
+                MISSION FAILED
+            </div>
+
+            <div id="game-over-reason">
+                CONNECTION TO PERSONNEL LOST
+            </div>
+
+
+            <div class="menu-buttons">
+
+                <button
+                    class="menu-button"
+                    data-action="continue"
+                >
+                    <span>
+                        RESTART
+                    </span>
+                </button>
+
+
+                <button
+                    class="menu-button"
+                    data-action="menu"
+                >
+                    <span>
+                        MAIN MENU
+                    </span>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script src="script.js"></script>
+
+</body>
+</html>
